@@ -8,7 +8,12 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use('/usrer', userRoute)
+
+
+app.use('/user',require("./routes/userRoutes"))
+
+
+
 
 app.get('/', (req, res, next) => {
     res.json("message hellos")
