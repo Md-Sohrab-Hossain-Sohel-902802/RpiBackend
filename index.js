@@ -1,64 +1,26 @@
-var express=require("express")
 
-let mysql = require('mysql');
-let connection = mysql.createConnection({
-     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'node'
-});
+var express = require("express")
+var bodyParser = require("body-parser")
+var cors = require("cors")
+var app = express()
 
-// connect to the MySQL server
-connection.connect(function (err) {
-    if (err) {
-        return console.error('error: ' + err.message);
-    }
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
-    let createTodos = `create table if not exists todos(
-                          id int primary key auto_increment,
-                          title varchar(255)not null,
-                          completed varchar(1) not null default 0
-                      )`;
+app.use('/usrer', userRoute)
 
-    connection.query(createTodos, function (err, results, fields) {
-        if (err) {
-            console.log(err.message);
-        }
-    });
-
-    connection.end(function (err) {
-        if (err) {
-            return console.log(err.message);
-        }
-    });
-});
-
-
-
-
-var app=express()
-
-
-app.get("/",(req,res,next)=>{
-    res.send({
-        message:"You Are Very Lucy"
-    })
+app.get('/', (req, res, next) => {
+    res.json("message hellos")
 })
 
 
 
 
 
+const PORT = process.env.PORT || 4002
 
-
-
-
-
-
-
-const PORT=process.env.PORT||4001
-app.listen(PORT,()=>{
-
-    console.log(`Server is running on port ${PORT}`)
+app.listen(PORT, () => {
+    console.log(`Server is Running On Port ${PORT}`)
 
 })
